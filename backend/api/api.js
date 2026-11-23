@@ -18,8 +18,75 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+const ReadJSONFile = async (filePath)=>{
+    try{
+        const raw = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(raw);
+    }catch(error){
+        throw new Error("Hiba történt: ", error);
+    }
+}
+
 //!Endpoints:
 //?GET /api/test
+
+router.get('/madagaszkar', async (request,response)=>{
+    try{
+        const utvonal = path.join(__dirname, '../files/orszagok.json');
+        const content = await ReadJSONFile(utvonal);
+        let j=0;
+        while(j<content.orszagok.length && content.orszagok[j].orszag != "MADAGASZKÁR"){
+            j++;
+        }
+
+        response.status(200).json({
+            result: content.orszagok[j]
+        })
+    }catch(error){
+        response.status(500).json({
+            message: "Hiba!"
+        })
+    }
+})
+
+router.get('/OUAGADOUGOU', async (request,response)=>{
+    try{
+        const utvonal = path.join(__dirname, '../files/orszagok.json');
+        const content = await ReadJSONFile(utvonal);
+        let j=0;
+        while(j<content.orszagok.length && content.orszagok[j].fovaros != "OUAGADOUGOU"){
+            j++;
+        }
+
+        response.status(200).json({
+            result: content.orszagok[j]
+        })
+    }catch(error){
+        response.status(500).json({
+            message: "Hiba!"
+        })
+    }
+})
+
+router.get('/TT', async (request,response)=>{
+    try{
+        const utvonal = path.join(__dirname, '../files/orszagok.json');
+        const content = await ReadJSONFile(utvonal);
+        let j=0;
+        while(j<content.orszagok.length && content.orszagok[j].autojel != "TT"){
+            j++;
+        }
+
+        response.status(200).json({
+            result: content.orszagok[j]
+        })
+    }catch(error){
+        response.status(500).json({
+            message: "Hiba!"
+        })
+    }
+})
+
 router.get('/test', (request, response) => {
     response.status(200).json({
         message: 'Ez a végpont működik.'

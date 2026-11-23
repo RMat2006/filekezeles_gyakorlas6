@@ -1,0 +1,10 @@
+GET http://127.0.0.1:3000/api/madagaszkar
+
+###
+
+GET http://127.0.0.1:3000/api/OUAGADOUGOU
+
+###
+
+GET http://127.0.0.1:3000/api/TT
+
